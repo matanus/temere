@@ -1,5 +1,5 @@
 <?php
-namespace Temere;
+namespace Matanus\Temere;
 
 class Generator {
 

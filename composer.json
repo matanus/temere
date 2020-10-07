@@ -1,11 +1,14 @@
 {
     "name": "matanus/temere",
-    "description": "PHP random string generator",
     "type": "library",
+    "description": "PHP random string generator",
+    "keywords": [
+        "generator", "random string"
+    ],
+    "license": "MIT",
     "require": {
         "php": "^7.4.0"
     },
-    "license": "MIT",
     "authors": [
         {
             "name": "Kazimierz Matan",
