@@ -1,0 +1,16 @@
+{
+    "name": "matanus/temere",
+    "description": "PHP random string generator",
+    "type": "library",
+    "require": {
+        "php": "^7.4.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kazimierz Matan",
+            "email": "kazimierz.matan@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
