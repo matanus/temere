@@ -9,6 +9,11 @@
     "require": {
         "php": "^7.4.0"
     },
+    "autoload": {
+        "psr-4": {
+            "Matanus\\Temere\\": "src/"
+        }
+    },
     "authors": [
         {
             "name": "Kazimierz Matan",
