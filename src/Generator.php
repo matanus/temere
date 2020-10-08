@@ -2,77 +2,99 @@
 
 namespace Matanus\Temere;
 
-class Generator {
+use Matanus\Temere\Dictionary;
 
-    use Matanus\Temere\Dictionary;
-
-    private $types;
-    private $methods;
-    private $max_string_length;
-    private $type;
+class Generator
+{
     private $length;
+    private $min_length;
+    private $max_length;
+    private $type;
+    private $method;
+    private $dictionary;
 
-    public function __construct() {
-
-        $this->types = ["a", "A", "1", "-"];
-        $this->methods = ['brute', 'hash', 'uniqid', 'randombytes'];
-        $this->max_string_length = 1024;
-        $this->type = "aA1-";
+    public function __construct()
+    {
         $this->length = 20;
-        $this->dict = new Dictionary;
+        $this->max_length = 1024;
+        $this->min_length = 2;
+        $this->method = 'brute';
+        $this->dictionary = new Dictionary;
     }
 
-    public function generate($type = "aA1-", $length = 20) {
+    public function generate()
+    {
+        $this->method = $this->selectRandomMethod();
 
-            
-            if ($length > $this->max_string_length) $length = $this->max_string_length;
-
-            $method = $this->selectMethod();
-            
-            return $this->generateUsingMethod($method, $type, $length);
+        return $this->generateUsingSelectedMethod();
     }
 
-    private function selectMethod() {
-
-        return $this->methods[mt_rand(0, count($this->methods)-1)];
+    private function selectRandomMethod()
+    {
+        $methods = $this->getAvailableMethods();
+        return $methods[mt_rand(0, count($methods) - 1)];
     }
 
-    private function generateUsingMethod($method, $type, $length) {
+    private function generateUsingSelectedMethod()
+    {
+        return $this->{"use" . ucfirst($this->method)}();
+    }
 
-        if ($method === "brute") {
-            return $this->useBrute();
-        } elseif ($method === "hash") {
-            return $this->useHash();
-        } elseif ($method === "uniqid") {
-            return $this->useUniqid();
-        } elseif ($method === "randombytes") {
-            return $this->useRandombytes();
+    public function useBrute()
+    {
+        $characters = $this->dictionary->allChars();
+
+        $string = "";
+        for ($i = 0; $i < $this->length; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $string .= $characters[$index];
+        }
+        return $string;
+    }
+
+    public function getLength()
+    {
+        return $this->length;
+    }
+
+    public function setLength($arg)
+    {
+        $len = intval($arg, 10);
+
+        if (($this->min_length <= $len) && ($len <= $this->max_length)) {
+            $this->length = $len;
         } else {
-            return "Method not set! String not generated!";
+            $this->length = $this->max_length;
         }
     }
 
-    private function useBrute() {
-
-        return "H4i0&eT@.U06 (brute - example, not unique!) - ".$this->dict->all();
-
+    public function getMinLength()
+    {
+        return $this->min_length;
     }
 
-    private function useHash() {
-
-        return "c3o(6g%m.Hj4sD (hash - example, not unique!) - ".$this->dict->all();
-
+    public function getMaxLength()
+    {
+        return $this->max_length;
     }
 
-    private function useUniqid() {
-
-        return "3D,8H%w2kUg8 (uniqid - example, not unique!) - ".$this->dict->all();
-
+    public function getType()
+    {
+        return $this->type;
     }
 
-    private function useRandombytes() {
+    public function getMethod()
+    {
+        return $this->method;
+    }
 
-        return "Yg37.L0h#sD6a (randombytes - example, not unique!) - ".$this->dict->all();
+    public function getAvailableMethods()
+    {
+        return $this->dictionary->availableMethods();
+    }
 
+    public function getAllChars()
+    {
+        return $this->dictionary->allChars();
     }
 }
