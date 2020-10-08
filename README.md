@@ -55,3 +55,4 @@ In future versions I plan to allow to select types/groups of chars to be used.
 1. Add other generation methods.
 2. Make it possible to change the type of characters used (lowercase, uppercase, digits, special chars).
 3. Document the code.
+4. Config file.
